@@ -8,10 +8,12 @@ app.use(express.json({ limit: "50mb" }));
 const userRoutes = require("./src/routers/user");
 const authRoutes = require("./src/routers/auth");
 const bookRoutes = require("./src/routers/book")
+// const roleRoutes = require("./src/routers/role")
 
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
-app.use("/books", bookRoutes);
+app.use("/book", bookRoutes);
+// app.use("/role", roleRoutes)
 
 
 

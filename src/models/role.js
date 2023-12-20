@@ -16,9 +16,7 @@ const roleSchema = new mongoose.Schema({
             update: { type: Boolean, default: false },
             delete: { type: Boolean, default: false }
         },
-        // Thêm các model khác và quyền hạn tương ứng
     }
-    // Các trường khác nếu cần thiết
 });
 
 const Role = mongoose.model('Role', roleSchema);
