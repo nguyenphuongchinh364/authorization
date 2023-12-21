@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Role = require('../models/role');
 
 exports.myProfile = async (req, res) => {
     try {
@@ -74,16 +75,22 @@ exports.updateUserById = async (req, res) => {
 exports.updateUserRole = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const user = await User.findById(userId);
+        const roleName = req.params.roleName;
 
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Cập nhật quyền của người dùng
-        user.role = req.params.userRole; // Thay đổi từ roleId sang userRole
+        // Kiểm tra xem role có tồn tại trong hệ thống hay không
+        const role = await Role.findOne({ role_name: roleName });
+        if (!role) {
+            return res.status(404).json({ message: 'Role not found' });
+        }
 
-        // Lưu thông tin người dùng đã được cập nhật vào cơ sở dữ liệu
+        // Cập nhật quyền của người dùng
+        user.role_name = roleName;
+        console.log(user.role_name)
         const updatedUser = await user.save();
 
         return res.status(200).json({ message: 'User role updated successfully', updatedUser });
@@ -91,6 +98,7 @@ exports.updateUserRole = async (req, res) => {
         return res.status(500).json({ message: `Failed to update user role: ${error.message}` });
     }
 };
+
 
 
 
